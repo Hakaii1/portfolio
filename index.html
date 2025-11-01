@@ -1,206 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Personal Portfolio</title>
-        <link rel="stylesheet" href="style.css">
-        <script src="https://kit.fontawesome.com/815e56b167.js" crossorigin="anonymous"></script>
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kyle Eurie | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/815e56b167.js" crossorigin="anonymous"></script>
+</head>
 <body>
-<div id="header">
-    <div class="container">
-        <nav>
-            <img src="Images/logo.png" class="logo">
-            <ul id="sidemenu">
-                <li><a href="#header">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#hobbies">Hobbies</a></li>
-                <li><a href="#achievements">Achievements</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <i class="fa-solid fa-xmark" onclick="closemenu()"></i>
-            </ul>
-            <i class="fa-solid fa-bars" onclick="openmenu()"></i>
-        </nav>
-        <div class="header-text">
-            <p>2nd Year College</p>
-            <h1>Hi, I'm <span>Kyle Eurie</span><br>From CS-202</h1>
-        </div>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <canvas id="canvas"></canvas>
     </div>
-</div>
-<!-----------about---------------->
-<div id="about">
-    <div class="container">
-        <div class="row">
-            <div class="about-col-1">
-                <img src="Images/user.png">
-            </div>
-            <div class="about-col-2">
-                <h1 class="sub-title">About Me</h1>
-                <p>My name is <span style="color: #ff004f;">Kyle Eurie Alvaro Gulapa.</span> My birthday is September 06, 2003 and I'm currently 20 years old. I'm from Porac Pampanga and studying at <span style="color: #ff004f;">Holy Angel University</span> taking <span style="color: #ff004f;">Bachelor of Science in Computer Science.</span></p>
 
-                <div class="tab-titles">
-                    <p class="tab-links active-link" onclick="opentab('skills')">Skills</p>
-                    <p class="tab-links" onclick="opentab('experience')">Experience</p>
-                    <p class="tab-links" onclick="opentab('education')">Education</p>
-                </div>
-                <!-----------skills---------->
-                <div class="tab-contents active-tab" id="skills">
-                    <ul>
-                        <li><span>Java</span><br>Basic knowledge</li>
-                        <li><span>Python</span><br>Basic knowledge</li>
-                        <li><span>HTML</span><br>Basic knowledge</li>
-                        <li><span>CSS</span><br>Basic knowledge</li>
-                        <li><span>JAVASCRIPT</span><br>Basic knowledge</li>
-                    </ul>
-                </div>
-                <!-----------Experience---------->
-                <div class="tab-contents" id="experience">
-                    <ul>
-                        <li><span>N/A</span></li>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo">Kyle Eurie</div>
+        <ul id="navMenu">
+            <li><a href="#header">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
 
-                    </ul>
-                </div>
-                <!-----------Education---------->
-                <div class="tab-contents" id="education">
-                    <ul>
-                        <li><span>Elementary</span><br>Mitla Elementary School</li>
-                        <li><span>High School</span><br>Porac Model Community High School</li>
-                        <li><span>Senior High School</span><br>Porac Model Community High School</li>
-                        <li><span>College</span><br>Holy Angel University</li>
-                    </ul>
-                </div>
+    <!-- Hero Section -->
+    <section id="header">
+        <div class="hero-content">
+            <h1>Hi, I'm <span>Kyle Eurie</span></h1>
+            <p class="tagline">Computer Science Student</p>
+            <p class="typing-text" id="typingText"></p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">
+                    View My Works <i class="fas fa-arrow-down"></i>
+                </a>
+                <a href="#contact" class="btn btn-secondary">
+                    Let's Connect <i class="fas fa-envelope"></i>
+                </a>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-
-<!-------------Hobbies------------->
-<div id="hobbies">
-    <div class="container">
-        <h1 class="sub-title">My Hobbies</h1>
-        <div class="hobbies-list">
-            <div>
-                <i class="fa-solid fa-gamepad"></i>
-                <h2>Online Games</h2>
-                <p>Playing online games is one of my stress reliever. I've been playing online games in any platforms such as Valorant, Mobile Legends, Clash of clans, League of legends, and many more.</p>
-                
-            </div>
-            <div>
-                <i class="fa-solid fa-basketball"></i>
-                <h2>Basketball</h2>
-                <p>Playing basketball with my friends also became one of my stress reliever.</p>
-                
-            </div>
-            <div>
-                <i class="fa-solid fa-code"></i>
-                <h2>Coding</h2>
-                <p>I took the course Bachelor of Science in Computer Science because I love coding and I want to know more about it.</p>
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<!------------Achievements----------->
-<div id="achievements">
-    <div class="container">
-        <h1 class="sub-title">My Achievements</h1>
-        <div class="work-list">
-            <div class="work">
-                <img src="Images/Achievement1.png">
-                <div class="layer">
-                    <h3>MLBB TOURNAMENT (Barangay)</h3>
-                    <p>On March 25, 2023, we won the finals in this brgy tournament and won 5000 pesos cash.</p>
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About Me</h2>
+        <div class="about-wrapper">
+            <div class="about-left">
+                <div class="profile-icon">
+                    <svg viewBox="0 0 200 200" class="profile-svg">
+                        <defs>
+                            <linearGradient id="profileGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ff6b81;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="100" cy="60" r="35" stroke="url(#profileGradient)" stroke-width="3" fill="none"/>
+                        <path d="M 50 140 Q 100 110, 150 140 L 150 180 Q 100 200, 50 180 Z" 
+                              stroke="url(#profileGradient)" stroke-width="3" fill="none"/>
+                    </svg>
+                </div>
+                <div class="about-text">
+                    <p>Hi! I'm <span style="color: #ff004f;">Kyle Eurie Alvaro Gulapa</span>, a 22-year-old student from Porac, Pampanga, currently studying at <span style="color: #ff004f;">Holy Angel University</span> and pursuing a <span style="color: #ff004f;">Bachelor of Science in Computer Science.</span> I'm a goal-driven and passionate individual eager to gain hands-on experience and strengthen my technical and professional skills. I have basic knowledge of programming languages such as <span style="color: #ff004f;">Java</span>, <span style="color: #ff004f;">Python</span>, <span style="color: #ff004f;">HTML</span>, <span style="color: #ff004f;">CSS</span>, <span style="color: #ff004f;">JavaScript</span>, and <span style="color: #ff004f;">React</span>. Committed to bringing creativity, adaptability, and a strong work ethic to every project I work on.</p>
                 </div>
             </div>
-            <div class="work">
-                <img src="Images/Achievement2.png">
-                <div class="layer">
-                    <h3>Mobile Legends</h3>
-                    <p>On June 29,2023, I achieved my highest stars in Mobile Legends</p>
-                </div>
-            </div>
-            <div class="work">
-                <img src="Images/Achievement3.png">
-                <div class="layer">
-                    <h3>MLBB TOURNAMENT (SOC DAYS)</h3>
-                    <p>On October 24, 2022, we fought all of the teams in our department(School of Computing) and won the championship.</p>
+
+            <div class="about-right">
+                <div class="tech-stack">
+                    <div class="tech-card" data-tech="java">
+                        <div class="tech-icon">
+                            <i class="fab fa-java"></i>
+                        </div>
+                        <span class="tech-name">Java</span>
+                    </div>
+                    <div class="tech-card" data-tech="python">
+                        <div class="tech-icon">
+                            <i class="fab fa-python"></i>
+                        </div>
+                        <span class="tech-name">Python</span>
+                    </div>
+                    <div class="tech-card" data-tech="html">
+                        <div class="tech-icon">
+                            <i class="fab fa-html5"></i>
+                        </div>
+                        <span class="tech-name">HTML</span>
+                    </div>
+                    <div class="tech-card" data-tech="css">
+                        <div class="tech-icon">
+                            <i class="fab fa-css3-alt"></i>
+                        </div>
+                        <span class="tech-name">CSS</span>
+                    </div>
+                    <div class="tech-card" data-tech="js">
+                        <div class="tech-icon">
+                            <i class="fab fa-js"></i>
+                        </div>
+                        <span class="tech-name">JavaScript</span>
+                    </div>
+                    <div class="tech-card" data-tech="react">
+                        <div class="tech-icon">
+                            <i class="fab fa-react"></i>
+                        </div>
+                        <span class="tech-name">React</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <a href="#" class="btn">See more</a>
-    </div>
-</div>
-<!----------contact-------------->
-<div id="contact">
-    <div class="container">
-        <div class="row">
-            <div class="contact-left">
-                <h1 class="sub-title">Contact Me</h1>
-                <p><i class="fa-solid fa-paper-plane"></i> kylegulapa06@gmail.com</p>
-                <p><i class="fas fa-phone-square-alt"></i> 09123456789</p>
-                <div class="social-icons">
-                    <a href="https://www.facebook.com/EurieGulapa/"><i class="fa-brands fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/kyle_eurie/"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://twitter.com/EurieeGulapa"><i class="fa-brands fa-square-twitter"></i></a>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 class="section-title">My Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Images/Achievement1.png" alt="Project 1">
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <h3>Web Development Project</h3>
+                    <p>A modern, responsive website built with HTML, CSS, and JavaScript featuring dynamic content and smooth animations.</p>
+                    <div class="project-tags">
+                        <span class="tag">HTML</span>
+                        <span class="tag">CSS</span>
+                        <span class="tag">JavaScript</span>
+                    </div>
                 </div>
             </div>
-            <div class="contact-right">
-                <form>
-                    <input type="text" name="Name" placeholder="Your Name" required>
-                    <input type="email" name="email" placeholder="Your Email" required>
-                    <textarea name="Message" rows="6" placeholder="Your Message"></textarea>
-                    <button type="submit" class="btn btn2">Submit</button>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Images/Achievement2.png" alt="Project 2">
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <h3>Python Application</h3>
+                    <p>A data analysis tool developed in Python that processes and visualizes complex datasets efficiently.</p>
+                    <div class="project-tags">
+                        <span class="tag">Python</span>
+                        <span class="tag">Data Analysis</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <div class="project-image">
+                    <img src="Images/Achievement3.png" alt="Project 3">
+                    <div class="project-overlay"></div>
+                </div>
+                <div class="project-info">
+                    <h3>Java Application</h3>
+                    <p>An object-oriented application demonstrating core programming concepts and design patterns in Java.</p>
+                    <div class="project-tags">
+                        <span class="tag">Java</span>
+                        <span class="tag">OOP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Let's Connect</h3>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>kylegulapa06@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>0960-323-7942</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Porac, Pampanga, Philippines</span>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/EurieGulapa/" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.instagram.com/kyle_eurie/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://twitter.com/EurieeGulapa" target="_blank"><i class="fab fa-twitter"></i></a>
+                </div>
+            </div>
+            <div class="contact-form">
+                <form onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
                 </form>
-                
             </div>
         </div>
-        <a href="#"><i class="fa-solid fa-circle-up"></i></a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 Kyle Eurie. <i class="fas fa-heart"></i></p>
+    </footer>
+
+    <!-- Scroll to Top -->
+    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+        <i class="fas fa-arrow-up"></i>
     </div>
-    <div class="copyright">
-        <p>Copyright © Kyle Eurie.<i class="fa-solid fa-heart"></i></p>
-    </div>
-</div>
 
-<script>
-
-    var tablinks = document.getElementsByClassName("tab-links");
-    var tabcontents = document.getElementsByClassName("tab-contents");
-
-    function opentab(tabname){
-        for(tablink of tablinks)
-        {
-            tablink.classList.remove("active-link");
-        }
-        for(tabcontent of tabcontents)
-        {
-            tabcontent.classList.remove("active-tab");
-        }
-        event.currentTarget.classList.add("active-link");
-        document.getElementById(tabname).classList.add("active-tab");
-    }
-
-</script>
-
-<script>
-
-    var sidemenu = document.getElementById("sidemenu");
-
-    function openmenu()
-    {
-        sidemenu.style.right = "0";
-    }
-
-    function closemenu()
-    {
-        sidemenu.style.right = "-200px";
-    }
-
-
-</script>
+    <script src="script.js"></script>
 </body>
 </html>
