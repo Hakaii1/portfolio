@@ -19,7 +19,7 @@
         <ul id="navMenu">
             <li><a href="#header">Home</a></li>
             <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
+            <li><a href="#projects">Works</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
         <div class="menu-toggle" onclick="toggleMenu()">
@@ -48,24 +48,16 @@
 
     <!-- About Section -->
     <section id="about">
-        <h2 class="section-title">About Me</h2>
+        <h2 class="section-title">About</h2>
         <div class="about-wrapper">
             <div class="about-left">
                 <div class="profile-icon">
-                    <svg viewBox="0 0 200 200" class="profile-svg">
-                        <defs>
-                            <linearGradient id="profileGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" style="stop-color:#4facfe;stop-opacity:1" />
-                                <stop offset="100%" style="stop-color:#ff6b81;stop-opacity:1" />
-                            </linearGradient>
-                        </defs>
-                        <circle cx="100" cy="60" r="35" stroke="url(#profileGradient)" stroke-width="3" fill="none"/>
-                        <path d="M 50 140 Q 100 110, 150 140 L 150 180 Q 100 200, 50 180 Z" 
-                              stroke="url(#profileGradient)" stroke-width="3" fill="none"/>
-                    </svg>
+                    <div class="gradient-border">
+                        <img src="Images/1x1.png" alt="Profile Picture">
+                    </div>
                 </div>
                 <div class="about-text">
-                    <p>Hi! I'm <span style="color: #ff004f;">Kyle Eurie Alvaro Gulapa</span>, a 22-year-old student from Porac, Pampanga, currently studying at <span style="color: #ff004f;">Holy Angel University</span> and pursuing a <span style="color: #ff004f;">Bachelor of Science in Computer Science.</span> I'm a goal-driven and passionate individual eager to gain hands-on experience and strengthen my technical and professional skills. I have basic knowledge of programming languages such as <span style="color: #ff004f;">Java</span>, <span style="color: #ff004f;">Python</span>, <span style="color: #ff004f;">HTML</span>, <span style="color: #ff004f;">CSS</span>, <span style="color: #ff004f;">JavaScript</span>, and <span style="color: #ff004f;">React</span>. Committed to bringing creativity, adaptability, and a strong work ethic to every project I work on.</p>
+                    <p>Hi! I'm <span style="color: #ff004f;">Kyle Eurie Alvaro Gulapa</span>, a 22-year-old student from Porac, Pampanga, currently studying at <span style="color: #ff004f;">Holy Angel University</span> and pursuing a <span style="color: #ff004f;">Bachelor of Science in Computer Science</span>. I'm a goal-driven and passionate individual eager to gain hands-on experience and strengthen my technical and professional skills. I have basic knowledge of programming languages such as <span style="color: #ff004f;">Python</span>, <span style="color: #ff004f;">Java</span>, <span style="color: #ff004f;">HTML</span>, <span style="color: #ff004f;">CSS</span>, <span style="color: #ff004f;">JavaScript</span>, and <span style="color: #ff004f;">React</span>. Committed to bringing creativity, adaptability, and a strong work ethic to every project I work on.</p>
                 </div>
             </div>
 
@@ -114,50 +106,33 @@
 
     <!-- Projects Section -->
     <section id="projects">
-        <h2 class="section-title">My Projects</h2>
+        <h2 class="section-title">Works</h2>
         <div class="projects-grid">
             <div class="project-card">
                 <div class="project-image">
-                    <img src="Images/Achievement1.png" alt="Project 1">
+                    <img src="Images/Extension.png" alt="Project 1">
                     <div class="project-overlay"></div>
                 </div>
                 <div class="project-info">
-                    <h3>Web Development Project</h3>
-                    <p>A modern, responsive website built with HTML, CSS, and JavaScript featuring dynamic content and smooth animations.</p>
-                    <div class="project-tags">
-                        <span class="tag">HTML</span>
-                        <span class="tag">CSS</span>
-                        <span class="tag">JavaScript</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="Images/Achievement2.png" alt="Project 2">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3>Python Application</h3>
-                    <p>A data analysis tool developed in Python that processes and visualizes complex datasets efficiently.</p>
+                    <h3>Facebook Browser Extension</h3>
+                    <p>A Python-based tool designed to detect and automatically blur phishing posts on Facebook.</p>
                     <div class="project-tags">
                         <span class="tag">Python</span>
-                        <span class="tag">Data Analysis</span>
                     </div>
                 </div>
             </div>
 
             <div class="project-card">
                 <div class="project-image">
-                    <img src="Images/Achievement3.png" alt="Project 3">
+                    <img src="Images/Sulyap.png" alt="Project 2">
                     <div class="project-overlay"></div>
                 </div>
                 <div class="project-info">
-                    <h3>Java Application</h3>
-                    <p>An object-oriented application demonstrating core programming concepts and design patterns in Java.</p>
+                    <h3>Kapampangan Quiz App</h3>
+                    <p>A Dart-built application that promotes Kapampangan language learning through interactive quizzes.</p>
                     <div class="project-tags">
-                        <span class="tag">Java</span>
-                        <span class="tag">OOP</span>
+                        <span class="tag">Dart</span>
+                        <span class="tag">Flutter</span>
                     </div>
                 </div>
             </div>
@@ -181,11 +156,6 @@
                 <div class="contact-item">
                     <i class="fas fa-map-marker-alt"></i>
                     <span>Porac, Pampanga, Philippines</span>
-                </div>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/EurieGulapa/" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.instagram.com/kyle_eurie/" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://twitter.com/EurieeGulapa" target="_blank"><i class="fab fa-twitter"></i></a>
                 </div>
             </div>
             <div class="contact-form">
