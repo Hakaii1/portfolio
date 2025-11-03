@@ -3,136 +3,389 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kyle Eurie | Portfolio</title>
+    <title>Kyle Eurie | Full Stack Developer</title>
     <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/815e56b167.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <meta name="description" content="Kyle Eurie - Full Stack Developer specializing in modern web technologies, Python, and innovative solutions.">
 </head>
 <body>
+    <!-- Theme Toggle -->
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-palette"></i>
+    </div>
+
+    <!-- Theme Panel -->
+    <div class="theme-panel" id="themePanel">
+        <h4>Choose Theme</h4>
+        <div class="theme-options">
+            <button class="theme-option active" data-theme="dark">
+                <div class="theme-preview dark"></div>
+                <span>Dark</span>
+            </button>
+            <button class="theme-option" data-theme="light">
+                <div class="theme-preview light"></div>
+                <span>Light</span>
+            </button>
+            <button class="theme-option" data-theme="neon">
+                <div class="theme-preview neon"></div>
+                <span>Neon</span>
+            </button>
+            <button class="theme-option" data-theme="cyberpunk">
+                <div class="theme-preview cyberpunk"></div>
+                <span>Cyberpunk</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Cursor Trail Container -->
+    <div class="cursor-trail" id="cursorTrail"></div>
+
     <!-- Animated Background -->
     <div class="animated-bg">
         <canvas id="canvas"></canvas>
+        <div class="bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+            <div class="shape shape-3"></div>
+        </div>
     </div>
 
     <!-- Navigation -->
     <nav id="navbar">
-        <div class="logo">Kyle Eurie</div>
-        <ul id="navMenu">
-            <li><a href="#header">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Works</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
-        <div class="menu-toggle" onclick="toggleMenu()">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-text">KE</span>
+                <span class="logo-full">Kyle Eurie</span>
+            </div>
+            <ul id="navMenu">
+                <li><a href="#hero" class="nav-link active">Home</a></li>
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#experience" class="nav-link">Experience</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#contact" class="cta-nav">Hire Me</a>
+                <div class="menu-toggle" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <section id="header">
-        <div class="hero-content">
-            <h1>Hi, I'm <span>Kyle Eurie</span></h1>
-            <p class="tagline">Computer Science Student</p>
-            <p class="typing-text" id="typingText"></p>
-            <div class="cta-buttons">
+    <section id="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1 class="hero-title">
+                        <span class="greeting">Hello, I'm</span>
+                        <span class="name">Kyle Eurie</span>
+                    </h1>
+                    <div class="hero-subtitle">
+                        <span class="static-text">Full Stack Developer &</span>
+                        <span class="dynamic-text" id="dynamicText"></span>
+                    </div>
+                    <p class="hero-description">
+                        Crafting digital experiences with passion and precision. 
+                        Specializing in modern web technologies and innovative solutions.
+                    </p>
+                    <div class="hero-stats">
+                        <div class="stat">
+                            <span class="stat-number">2+</span>
+                            <span class="stat-label">Years Experience</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">2</span>
+                            <span class="stat-label">Projects Completed</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-number">100%</span>
+                            <span class="stat-label">Dedication</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="profile-container">
+                        <div class="profile-glow"></div>
+                        <div class="profile-image">
+                            <img src="Images/1x1.png" alt="Kyle Eurie Profile">
+                            <div class="profile-overlay"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-actions">
                 <a href="#projects" class="btn btn-primary">
-                    View My Works <i class="fas fa-arrow-down"></i>
+                    <span>View My Work</span>
+                    <i class="fas fa-arrow-right"></i>
                 </a>
                 <a href="#contact" class="btn btn-secondary">
-                    Let's Connect <i class="fas fa-envelope"></i>
+                    <span>Get In Touch</span>
+                    <i class="fas fa-envelope"></i>
                 </a>
+                <a href="#about" class="btn btn-outline">
+                    <span>Learn More</span>
+                    <i class="fas fa-user"></i>
+                </a>
+            </div>
+            <div class="scroll-indicator">
+                <div class="scroll-mouse">
+                    <div class="scroll-wheel"></div>
+                </div>
+                <span>Scroll Down</span>
             </div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about">
-        <h2 class="section-title">About</h2>
-        <div class="about-wrapper">
-            <div class="about-left">
-                <div class="profile-icon">
-                    <div class="gradient-border">
-                        <img src="Images/1x1.png" alt="Profile Picture">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">About Me</h2>
+                <p class="section-subtitle">Get to know the person behind the code</p>
+            </div>
+            <div class="about-content">
+                <div class="about-image">
+                    <div class="image-wrapper">
+                        <img src="Images/1x1.png" alt="Kyle Eurie">
+                        <div class="image-overlay"></div>
                     </div>
                 </div>
                 <div class="about-text">
-                    <p>Hi! I'm <span style="color: #ff004f;">Kyle Eurie Alvaro Gulapa</span>, a 22-year-old student from Porac, Pampanga, currently studying at <span style="color: #ff004f;">Holy Angel University</span> and pursuing a <span style="color: #ff004f;">Bachelor of Science in Computer Science</span>. I'm a goal-driven and passionate individual eager to gain hands-on experience and strengthen my technical and professional skills. I have basic knowledge of programming languages such as <span style="color: #ff004f;">Python</span>, <span style="color: #ff004f;">Java</span>, <span style="color: #ff004f;">HTML</span>, <span style="color: #ff004f;">CSS</span>, <span style="color: #ff004f;">JavaScript</span>, and <span style="color: #ff004f;">React</span>. Committed to bringing creativity, adaptability, and a strong work ethic to every project I work on.</p>
-                </div>
-            </div>
-
-            <div class="about-right">
-                <div class="tech-stack">
-                    <div class="tech-card" data-tech="java">
-                        <div class="tech-icon">
-                            <i class="fab fa-java"></i>
+                    <h3>Passionate Developer & Problem Solver</h3>
+                    <p>
+                        I'm <strong>Kyle Eurie Alvaro Gulapa</strong>, a 22-year-old Computer Science student 
+                        from <strong>Holy Angel University</strong> in Porac, Pampanga. I'm a goal-driven and 
+                        passionate individual eager to gain hands-on experience and strengthen my technical 
+                        and professional skills.
+                    </p>
+                    <p>
+                        My journey in technology began with curiosity and has evolved into a deep passion 
+                        for creating innovative solutions. I believe in the power of technology to solve 
+                        real-world problems and make a positive impact.
+                    </p>
+                    <div class="about-highlights">
+                        <div class="highlight">
+                            <i class="fas fa-code"></i>
+                            <span>Full Stack Development</span>
                         </div>
-                        <span class="tech-name">Java</span>
-                    </div>
-                    <div class="tech-card" data-tech="python">
-                        <div class="tech-icon">
-                            <i class="fab fa-python"></i>
+                        <div class="highlight">
+                            <i class="fas fa-lightbulb"></i>
+                            <span>Innovative Solutions</span>
                         </div>
-                        <span class="tech-name">Python</span>
-                    </div>
-                    <div class="tech-card" data-tech="html">
-                        <div class="tech-icon">
-                            <i class="fab fa-html5"></i>
+                        <div class="highlight">
+                            <i class="fas fa-users"></i>
+                            <span>Team Collaboration</span>
                         </div>
-                        <span class="tech-name">HTML</span>
-                    </div>
-                    <div class="tech-card" data-tech="css">
-                        <div class="tech-icon">
-                            <i class="fab fa-css3-alt"></i>
+                        <div class="highlight">
+                            <i class="fas fa-rocket"></i>
+                            <span>Continuous Learning</span>
                         </div>
-                        <span class="tech-name">CSS</span>
-                    </div>
-                    <div class="tech-card" data-tech="js">
-                        <div class="tech-icon">
-                            <i class="fab fa-js"></i>
-                        </div>
-                        <span class="tech-name">JavaScript</span>
-                    </div>
-                    <div class="tech-card" data-tech="react">
-                        <div class="tech-icon">
-                            <i class="fab fa-react"></i>
-                        </div>
-                        <span class="tech-name">React</span>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2 class="section-title">Works</h2>
-        <div class="projects-grid">
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="Images/Extension.png" alt="Project 1">
-                    <div class="project-overlay"></div>
-                </div>
-                <div class="project-info">
-                    <h3>Facebook Browser Extension</h3>
-                    <p>A Python-based tool designed to detect and automatically blur phishing posts on Facebook.</p>
-                    <div class="project-tags">
-                        <span class="tag">Python</span>
+    <!-- Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Technical Skills</h2>
+                <p class="section-subtitle">Technologies I work with</p>
+            </div>
+            <div class="skills-content">
+                <div class="skills-categories">
+                    <div class="skill-category">
+                        <h3>Frontend</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-html5"></i>
+                                </div>
+                                <span>HTML</span>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-css3-alt"></i>
+                                </div>
+                                <span>CSS</span>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 60%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-js"></i>
+                                </div>
+                                <span>JavaScript</span>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 45%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-react"></i>
+                                </div>
+                                <span>React</span>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 30%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Backend</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-python"></i>
+                                </div>
+                                <span>Python</span>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 70%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fab fa-java"></i>
+                                </div>
+                                <span>Java</span>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 30%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="skill-category">
+                        <h3>Mobile & Other</h3>
+                        <div class="skill-items">
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <span>Flutter</span>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 20%"></div>
+                                </div>
+                            </div>
+                            <div class="skill-item">
+                                <div class="skill-icon">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <span>Dart</span>
+                                <div class="skill-level">
+                                    <div class="skill-progress" style="width: 20%"></div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <div class="project-card">
-                <div class="project-image">
-                    <img src="Images/Sulyap.png" alt="Project 2">
-                    <div class="project-overlay"></div>
+       <!-- Projects Section -->
+       <section id="projects">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Projects</h2>
+                <p class="section-subtitle">Some of my recent work</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="Images/Extension.png" alt="Facebook Phishing Detector">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://chromewebstore.google.com/detail/facebook-phishing-detecto/gijaklfaegcklbdgikikgocmedcohmdl" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="https://github.com/Gamakichii/Thesis" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category">Security Tool</div>
+                        <h3>Facebook Phishing Detector</h3>
+                        <p>A sophisticated browser extension that automatically detects and blurs phishing posts on Facebook, protecting users from malicious content using advanced pattern recognition algorithms.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">Machine Learning</span>
+                            <span class="tech-tag">Browser API</span>
+                        </div>
+                    </div>
                 </div>
-                <div class="project-info">
-                    <h3>Kapampangan Quiz App</h3>
-                    <p>A Dart-built application that promotes Kapampangan language learning through interactive quizzes.</p>
-                    <div class="project-tags">
-                        <span class="tag">Dart</span>
-                        <span class="tag">Flutter</span>
+
+                <div class="project-card">
+                    <div class="project-image">
+                        <img src="Images/Sulyap.png" alt="Kapampangan Quiz App">
+                        <div class="project-overlay">
+                            <div class="project-links">
+                                <a href="https://drive.google.com/file/d/1LM_QiIAx7sjftbbsuZt3utUyp-ytqUmx/view" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i>
+                                </a>
+                                <a href="https://github.com/Gamakichii/sulyap_kapampangan-og" class="project-link" target="_blank" rel="noopener noreferrer">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <div class="project-category">Mobile App</div>
+                        <h3>Kapampangan Quiz App</h3>
+                        <p>An interactive mobile application designed to promote Kapampangan language learning through engaging quizzes, cultural content, and gamification elements.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Flutter</span>
+                            <span class="tech-tag">Dart</span>
+                            <span class="tech-tag">Firebase</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Experience & Education</h2>
+                <p class="section-subtitle">My journey so far</p>
+            </div>
+            <div class="experience-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <h3>Holy Angel University</h3>
+                                <span class="timeline-date">2022 - Present</span>
+                            </div>
+                            <div class="timeline-subtitle">Bachelor of Science in Computer Science</div>
+                            <p>Currently pursuing my degree with a focus on software development, algorithms, and system design.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-header">
+                                <h3>Personal Projects</h3>
+                                <span class="timeline-date">2022 - Present</span>
+                            </div>
+                            <div class="timeline-subtitle">Self-Learning & Innovation</div>
+                            <p>Developing personal projects to explore new technologies, contribute to open-source, and build a strong portfolio showcasing problem-solving abilities and technical skills.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -141,48 +394,105 @@
 
     <!-- Contact Section -->
     <section id="contact">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="contact-container">
-            <div class="contact-info">
-                <h3>Let's Connect</h3>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i>
-                    <span>kylegulapa06@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i>
-                    <span>0960-323-7942</span>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Porac, Pampanga, Philippines</span>
-                </div>
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Let's Connect</h2>
+                <p class="section-subtitle">Ready to bring your ideas to life</p>
             </div>
-            <div class="contact-form">
-                <form onsubmit="handleSubmit(event)">
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Email</h4>
+                            <p>kylegulapa06@gmail.com</p>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Your Email" required>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Phone</h4>
+                            <p>+63 960 323 7942</p>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <textarea placeholder="Your Message" required></textarea>
+                    <div class="contact-card">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <h4>Location</h4>
+                            <p>Porac, Pampanga, Philippines</p>
+                        </div>
                     </div>
-                    <button type="submit" class="submit-btn">Send Message</button>
-                </form>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm" onsubmit="handleSubmit(event)">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Subject</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" name="message" rows="6" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <span>Send Message</span>
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <p>© 2025 Kyle Eurie. <i class="fas fa-heart"></i></p>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span>KE</span>
+                    <span>Kyle Eurie</span>
+                </div>
+                <p class="footer-text">
+                    Crafting digital experiences with passion and innovation.
+                </p>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Kyle Eurie. All rights reserved. Made with <i class="fas fa-heart"></i>.</p>
+            </div>
+        </div>
     </footer>
 
     <!-- Scroll to Top -->
-    <div class="scroll-top" id="scrollTop" onclick="scrollToTop()">
+    <div class="scroll-to-top" id="scrollToTop">
         <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="loading-logo">
+                <span>KE</span>
+            </div>
+            <div class="loading-bar">
+                <div class="loading-progress"></div>
+            </div>
+            <p>Loading...</p>
+        </div>
     </div>
 
     <script src="script.js"></script>

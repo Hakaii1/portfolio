@@ -1,33 +1,233 @@
-// Canvas Background Animation
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+// Loading Screen
+window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loadingScreen');
+    setTimeout(() => {
+        loadingScreen.classList.add('hidden');
+    }, 2000);
+});
 
-const particles = [];
-const particleCount = 100;
+// Theme Management
+class ThemeManager {
+    constructor() {
+        this.themes = {
+            dark: {
+                primary: '#4facfe',
+                secondary: '#ff6b81',
+                accent: '#a855f7'
+            },
+            light: {
+                primary: '#4facfe',
+                secondary: '#ff6b81',
+                accent: '#a855f7'
+            },
+            neon: {
+                primary: '#00ff88',
+                secondary: '#ff0080',
+                accent: '#8000ff'
+            },
+            cyberpunk: {
+                primary: '#ff073a',
+                secondary: '#00d4ff',
+                accent: '#ffd700'
+            }
+        };
+        this.currentTheme = localStorage.getItem('theme') || 'dark';
+        this.init();
+    }
+
+    init() {
+        this.applyTheme(this.currentTheme);
+        this.setupEventListeners();
+    }
+
+    setupEventListeners() {
+        // Theme toggle button
+        const themeToggle = document.getElementById('themeToggle');
+        const themePanel = document.getElementById('themePanel');
+
+        themeToggle.addEventListener('click', () => {
+            themePanel.classList.toggle('active');
+        });
+
+        // Close theme panel when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!themeToggle.contains(e.target) && !themePanel.contains(e.target)) {
+                themePanel.classList.remove('active');
+            }
+        });
+
+        // Theme options
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.addEventListener('click', () => {
+                const theme = option.dataset.theme;
+                this.setTheme(theme);
+                themePanel.classList.remove('active');
+            });
+        });
+    }
+
+    setTheme(theme) {
+        this.currentTheme = theme;
+        localStorage.setItem('theme', theme);
+        this.applyTheme(theme);
+    }
+
+    applyTheme(theme) {
+        const root = document.documentElement;
+        root.setAttribute('data-theme', theme);
+
+        // Update active theme option
+        document.querySelectorAll('.theme-option').forEach(option => {
+            option.classList.toggle('active', option.dataset.theme === theme);
+        });
+    }
+}
+
+// Cursor Trail Effect
+class CursorTrail {
+    constructor() {
+        this.trail = document.getElementById('cursorTrail');
+        this.particles = [];
+        this.mouse = { x: 0, y: 0 };
+        this.init();
+    }
+
+    init() {
+        document.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.clientX;
+            this.mouse.y = e.clientY;
+            this.createParticle();
+        });
+
+        this.animate();
+    }
+
+    createParticle() {
+        const particle = document.createElement('div');
+        particle.className = 'cursor-particle';
+        particle.style.left = this.mouse.x + 'px';
+        particle.style.top = this.mouse.y + 'px';
+
+        // Random color based on theme
+        const colors = ['#4facfe', '#ff6b81', '#a855f7', '#00ff88', '#ff073a'];
+        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+
+        this.trail.appendChild(particle);
+
+        // Remove particle after animation
+        setTimeout(() => {
+            particle.remove();
+        }, 800);
+    }
+
+    animate() {
+        requestAnimationFrame(() => this.animate());
+    }
+}
+
+// Canvas Background Animation
+class CanvasAnimation {
+    constructor() {
+        this.canvas = document.getElementById('canvas');
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.mouse = { x: undefined, y: undefined };
+        this.particleCount = 80;
+        this.init();
+    }
+
+    init() {
+        this.resizeCanvas();
+        this.createParticles();
+        this.animate();
+
+        window.addEventListener('resize', () => this.resizeCanvas());
+        document.addEventListener('mousemove', (e) => {
+            this.mouse.x = e.clientX;
+            this.mouse.y = e.clientY;
+        });
+    }
+
+    resizeCanvas() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+    }
+
+    createParticles() {
+        for (let i = 0; i < this.particleCount; i++) {
+            this.particles.push(new Particle(this.canvas));
+        }
+    }
+
+    animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.particles.forEach(particle => {
+            particle.update(this.mouse);
+            particle.draw(this.ctx);
+        });
+
+        this.connectParticles();
+        requestAnimationFrame(() => this.animate());
+    }
+
+    connectParticles() {
+        for (let i = 0; i < this.particles.length; i++) {
+            for (let j = i + 1; j < this.particles.length; j++) {
+                const dx = this.particles[i].x - this.particles[j].x;
+                const dy = this.particles[i].y - this.particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 120) {
+                    const opacity = (120 - distance) / 120 * 0.2;
+                    this.ctx.strokeStyle = `rgba(79, 172, 254, ${opacity})`;
+                    this.ctx.lineWidth = 1;
+                    this.ctx.beginPath();
+                    this.ctx.moveTo(this.particles[i].x, this.particles[j].x);
+                    this.ctx.lineTo(this.particles[i].y, this.particles[j].y);
+                    this.ctx.stroke();
+                }
+            }
+        }
+    }
+}
 
 class Particle {
-    constructor() {
+    constructor(canvas) {
+        this.canvas = canvas;
         this.x = Math.random() * canvas.width;
         this.y = Math.random() * canvas.height;
-        this.size = Math.random() * 2 + 1;
-        this.speedX = Math.random() * 0.5 - 0.25;
-        this.speedY = Math.random() * 0.5 - 0.25;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
         this.opacity = Math.random() * 0.5 + 0.2;
     }
 
-    update() {
+    update(mouse) {
         this.x += this.speedX;
         this.y += this.speedY;
 
-        if (this.x > canvas.width) this.x = 0;
-        if (this.x < 0) this.x = canvas.width;
-        if (this.y > canvas.height) this.y = 0;
-        if (this.y < 0) this.y = canvas.height;
+        // Mouse interaction
+        if (mouse.x && mouse.y) {
+            const dx = mouse.x - this.x;
+            const dy = mouse.y - this.y;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            if (distance < 100) {
+                const force = (100 - distance) / 100;
+                this.x -= dx * force * 0.01;
+                this.y -= dy * force * 0.01;
+            }
+        }
+
+        // Boundary check
+        if (this.x > this.canvas.width) this.x = 0;
+        if (this.x < 0) this.x = this.canvas.width;
+        if (this.y > this.canvas.height) this.y = 0;
+        if (this.y < 0) this.y = this.canvas.height;
     }
 
-    draw() {
+    draw(ctx) {
         ctx.fillStyle = `rgba(79, 172, 254, ${this.opacity})`;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
@@ -35,216 +235,243 @@ class Particle {
     }
 }
 
-function init() {
-    for (let i = 0; i < particleCount; i++) {
-        particles.push(new Particle());
-    }
-}
-
-function connectParticles() {
-    for (let i = 0; i < particles.length; i++) {
-        for (let j = i + 1; j < particles.length; j++) {
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 150) {
-                ctx.strokeStyle = `rgba(79, 172, 254, ${0.2 * (1 - distance / 150)})`;
-                ctx.lineWidth = 1;
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.stroke();
-            }
-        }
-    }
-}
-
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    particles.forEach(particle => {
-        particle.update();
-        particle.draw();
-    });
-    connectParticles();
-    requestAnimationFrame(animate);
-}
-
-init();
-animate();
-
-window.addEventListener('resize', () => {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-});
-
 // Typing Animation
-const texts = [
-    "Building digital experiences",
-    "Problem solver & innovator",
-    "Passionate about coding",
-    "Always learning & growing"
-];
-let textIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-const typingElement = document.getElementById('typingText');
-
-function typeText() {
-    const currentText = texts[textIndex];
-    
-    if (isDeleting) {
-        typingElement.textContent = currentText.substring(0, charIndex - 1);
-        charIndex--;
-    } else {
-        typingElement.textContent = currentText.substring(0, charIndex + 1);
-        charIndex++;
+class TypingAnimation {
+    constructor() {
+        this.texts = [
+            "Full Stack Developer",
+            "Problem Solver",
+            "Creative Thinker",
+            "Tech Enthusiast"
+        ];
+        this.element = document.getElementById('dynamicText');
+        this.textIndex = 0;
+        this.charIndex = 0;
+        this.isDeleting = false;
+        this.typeSpeed = 100;
+        this.init();
     }
 
-    let typeSpeed = isDeleting ? 50 : 100;
-
-    if (!isDeleting && charIndex === currentText.length) {
-        typeSpeed = 2000;
-        isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        textIndex = (textIndex + 1) % texts.length;
-        typeSpeed = 500;
+    init() {
+        setTimeout(() => this.type(), 1000);
     }
 
-    setTimeout(typeText, typeSpeed);
-}
+    type() {
+        const currentText = this.texts[this.textIndex];
 
-setTimeout(typeText, 1000);
-
-// Navigation Scroll Effect
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 100) {
-        navbar.classList.add('scrolled');
-    } else {
-        navbar.classList.remove('scrolled');
-    }
-});
-
-// Mobile Menu Toggle
-function toggleMenu() {
-    const navMenu = document.getElementById('navMenu');
-    const menuToggle = document.querySelector('.menu-toggle');
-    navMenu.classList.toggle('active');
-    menuToggle.classList.toggle('active');
-}
-
-// Close menu when clicking on a link
-document.querySelectorAll('#navMenu a').forEach(link => {
-    link.addEventListener('click', () => {
-        const navMenu = document.getElementById('navMenu');
-        const menuToggle = document.querySelector('.menu-toggle');
-        if (navMenu.classList.contains('active')) {
-            navMenu.classList.remove('active');
-            menuToggle.classList.remove('active');
+        if (this.isDeleting) {
+            this.element.textContent = currentText.substring(0, this.charIndex - 1);
+            this.charIndex--;
+            this.typeSpeed = 50;
+        } else {
+            this.element.textContent = currentText.substring(0, this.charIndex + 1);
+            this.charIndex++;
+            this.typeSpeed = 100;
         }
-    });
-});
 
-// Tab System
-function openTab(evt, tabName) {
-    const tabContents = document.getElementsByClassName('tab-content');
-    for (let i = 0; i < tabContents.length; i++) {
-        tabContents[i].classList.remove('active');
+        if (!this.isDeleting && this.charIndex === currentText.length) {
+            this.typeSpeed = 2000;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.charIndex === 0) {
+            this.isDeleting = false;
+            this.textIndex = (this.textIndex + 1) % this.texts.length;
+            this.typeSpeed = 500;
+        }
+
+        setTimeout(() => this.type(), this.typeSpeed);
     }
-
-    const tabBtns = document.getElementsByClassName('tab-btn');
-    for (let i = 0; i < tabBtns.length; i++) {
-        tabBtns[i].classList.remove('active');
-    }
-
-    document.getElementById(tabName).classList.add('active');
-    evt.currentTarget.classList.add('active');
 }
 
-// Scroll to Top
-const scrollTopBtn = document.getElementById('scrollTop');
-
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 300) {
-        scrollTopBtn.classList.add('visible');
-    } else {
-        scrollTopBtn.classList.remove('visible');
+// Navigation
+class Navigation {
+    constructor() {
+        this.navbar = document.getElementById('navbar');
+        this.navMenu = document.getElementById('navMenu');
+        this.menuToggle = document.querySelector('.menu-toggle');
+        this.scrollTopBtn = document.getElementById('scrollToTop');
+        this.init();
     }
-});
 
-function scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    init() {
+        this.setupScrollEffects();
+        this.setupMobileMenu();
+        this.setupSmoothScroll();
+        this.setupScrollToTop();
+        this.setupActiveLinks();
+    }
+
+    setupScrollEffects() {
+        window.addEventListener('scroll', () => {
+            const scrolled = window.scrollY > 100;
+            this.navbar.classList.toggle('scrolled', scrolled);
+            this.scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
+        });
+    }
+
+    setupMobileMenu() {
+        this.menuToggle.addEventListener('click', () => {
+            this.navMenu.classList.toggle('active');
+            this.menuToggle.classList.toggle('active');
+        });
+
+        // Close menu on link click
+        document.querySelectorAll('#navMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                this.navMenu.classList.remove('active');
+                this.menuToggle.classList.remove('active');
+            });
+        });
+    }
+
+    setupSmoothScroll() {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(anchor.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    }
+
+    setupScrollToTop() {
+        this.scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+    }
+
+    setupActiveLinks() {
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                const sectionId = section.getAttribute('id');
+
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${sectionId}`) {
+                            link.classList.add('active');
+                        }
+                    });
+                }
+            });
+        });
+    }
 }
 
-// Form Submit Handler
-function handleSubmit(e) {
-    e.preventDefault();
-    alert('Thank you for your message! I will get back to you soon.');
-    e.target.reset();
+// Skills Animation
+class SkillsAnimation {
+    constructor() {
+        this.skillItems = document.querySelectorAll('.skill-item');
+        this.init();
+    }
+
+    init() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    this.animateSkill(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        this.skillItems.forEach(item => observer.observe(item));
+    }
+
+    animateSkill(skillItem) {
+        const progressBar = skillItem.querySelector('.skill-progress');
+        if (progressBar) {
+            const width = progressBar.style.width;
+            progressBar.style.width = '0%';
+            setTimeout(() => {
+                progressBar.style.width = width;
+            }, 200);
+        }
+    }
 }
 
-// Smooth Scroll for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
+// Contact Form
+class ContactForm {
+    constructor() {
+        this.form = document.getElementById('contactForm');
+        this.init();
+    }
+
+    init() {
+        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+    }
+
+    async handleSubmit(e) {
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }
-    });
-});
 
-// Intersection Observer for Animations
-const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-};
+        const formData = new FormData(e.target);
+        const data = Object.fromEntries(formData);
 
-const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = '1';
-            entry.target.style.transform = 'translateY(0)';
-        }
-    });
-}, observerOptions);
+        // Simulate form submission
+        const submitBtn = e.target.querySelector('.btn');
+        const originalText = submitBtn.innerHTML;
 
-// Observe sections
-document.querySelectorAll('section').forEach(section => {
-    section.style.opacity = '0';
-    section.style.transform = 'translateY(50px)';
-    section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-    observer.observe(section);
-});
+        submitBtn.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin"></i>';
+        submitBtn.disabled = true;
 
-// Parallax Effect for Hero Section
-window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const heroContent = document.querySelector('.hero-content');
-    if (heroContent && scrolled < window.innerHeight) {
-        heroContent.style.transform = `translateY(${scrolled * 0.5}px)`;
-        heroContent.style.opacity = 1 - (scrolled / 600);
+        // Simulate API call
+        setTimeout(() => {
+            submitBtn.innerHTML = '<span>Sent Successfully!</span><i class="fas fa-check"></i>';
+            submitBtn.style.background = 'linear-gradient(135deg, #00ff88, #00ff44)';
+
+            setTimeout(() => {
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.style.background = '';
+                e.target.reset();
+            }, 3000);
+        }, 2000);
     }
-});
+}
 
-// Add hover effect for project cards
-const projectCards = document.querySelectorAll('.project-card');
-projectCards.forEach(card => {
-    card.addEventListener('mouseenter', function() {
-        this.style.zIndex = '10';
-    });
-    card.addEventListener('mouseleave', function() {
-        this.style.zIndex = '1';
-    });
-});
+// Scroll Animations
+class ScrollAnimations {
+    constructor() {
+        this.elements = document.querySelectorAll('.skill-item, .project-card, .timeline-item, .contact-card');
+        this.init();
+    }
 
-// Add loading animation
-window.addEventListener('load', () => {
-    document.body.style.opacity = '0';
-    setTimeout(() => {
-        document.body.style.transition = 'opacity 0.5s ease';
-        document.body.style.opacity = '1';
-    }, 100);
+    init() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }, index * 100);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        this.elements.forEach(element => {
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(30px)';
+            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(element);
+        });
+    }
+}
+
+// Initialize all components
+document.addEventListener('DOMContentLoaded', () => {
+    new ThemeManager();
+    new CursorTrail();
+    new CanvasAnimation();
+    new TypingAnimation();
+    new Navigation();
+    new SkillsAnimation();
+    new ContactForm();
+    new ScrollAnimations();
 });
