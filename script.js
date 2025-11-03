@@ -83,48 +83,6 @@ class ThemeManager {
     }
 }
 
-// Cursor Trail Effect
-class CursorTrail {
-    constructor() {
-        this.trail = document.getElementById('cursorTrail');
-        this.particles = [];
-        this.mouse = { x: 0, y: 0 };
-        this.init();
-    }
-
-    init() {
-        document.addEventListener('mousemove', (e) => {
-            this.mouse.x = e.clientX;
-            this.mouse.y = e.clientY;
-            this.createParticle();
-        });
-
-        this.animate();
-    }
-
-    createParticle() {
-        const particle = document.createElement('div');
-        particle.className = 'cursor-particle';
-        particle.style.left = this.mouse.x + 'px';
-        particle.style.top = this.mouse.y + 'px';
-
-        // Random color based on theme
-        const colors = ['#4facfe', '#ff6b81', '#a855f7', '#00ff88', '#ff073a'];
-        particle.style.background = colors[Math.floor(Math.random() * colors.length)];
-
-        this.trail.appendChild(particle);
-
-        // Remove particle after animation
-        setTimeout(() => {
-            particle.remove();
-        }, 800);
-    }
-
-    animate() {
-        requestAnimationFrame(() => this.animate());
-    }
-}
-
 // Canvas Background Animation
 class CanvasAnimation {
     constructor() {
@@ -467,7 +425,6 @@ class ScrollAnimations {
 // Initialize all components
 document.addEventListener('DOMContentLoaded', () => {
     new ThemeManager();
-    new CursorTrail();
     new CanvasAnimation();
     new TypingAnimation();
     new Navigation();
