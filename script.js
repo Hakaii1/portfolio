@@ -239,7 +239,7 @@ class Particle {
 class TypingAnimation {
     constructor() {
         this.texts = [
-            "Full Stack Developer",
+            "Quick Learner",
             "Problem Solver",
             "Creative Thinker",
             "Tech Enthusiast"
