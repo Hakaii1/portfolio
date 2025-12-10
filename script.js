@@ -422,6 +422,53 @@ class ScrollAnimations {
     }
 }
 
+// Resume Modal Management
+function openResumeModal() {
+    const modal = document.getElementById('resumeModal');
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeResumeModal() {
+    const modal = document.getElementById('resumeModal');
+    modal.classList.remove('active');
+    document.body.style.overflow = 'auto';
+}
+
+// Close modal when clicking outside
+document.addEventListener('click', (e) => {
+    const modal = document.getElementById('resumeModal');
+    if (e.target === modal) {
+        closeResumeModal();
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        closeResumeModal();
+    }
+});
+
+// Copy-to-clipboard for contact info (email / phone)
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const value = btn.dataset.copy;
+            try {
+                await navigator.clipboard.writeText(value);
+                const tooltip = btn.parentElement.querySelector('.copy-tooltip');
+                if (tooltip) {
+                    tooltip.classList.add('show');
+                    setTimeout(() => tooltip.classList.remove('show'), 1800);
+                }
+            } catch (err) {
+                console.error('Copy failed', err);
+            }
+        });
+    });
+});
+
 // Initialize all components
 document.addEventListener('DOMContentLoaded', () => {
     new ThemeManager();
