@@ -394,33 +394,8 @@ class ContactForm {
     }
 }
 
-// Scroll Animations
-class ScrollAnimations {
-    constructor() {
-        this.elements = document.querySelectorAll('.skill-item, .project-card, .timeline-item, .contact-card');
-        this.init();
-    }
-
-    init() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }, index * 100);
-                }
-            });
-        }, { threshold: 0.1 });
-
-        this.elements.forEach(element => {
-            element.style.opacity = '0';
-            element.style.transform = 'translateY(30px)';
-            element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(element);
-        });
-    }
-}
+// ScrollAnimations class removed - GSAP handles all scroll animations now
+// See gsap-animations.js for the enhanced scroll-triggered animations
 
 // Resume Modal Management
 function openResumeModal() {
@@ -476,6 +451,6 @@ document.addEventListener('DOMContentLoaded', () => {
     new TypingAnimation();
     new Navigation();
     new SkillsAnimation();
-    new ContactForm();
-    new ScrollAnimations();
+    // ContactForm is removed (no form in current design)
+    // ScrollAnimations removed - GSAP handles scroll animations
 });
