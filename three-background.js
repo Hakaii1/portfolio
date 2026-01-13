@@ -89,7 +89,7 @@ class ThreeBackground {
 
         this.bgMesh = new THREE.Mesh(bgGeometry, bgMaterial);
         this.bgMesh.position.z = -50;
-        this.scene.add(this.bgMesh);
+        // this.scene.add(this.bgMesh); // Removed to show original CSS background
     }
 
     createLights() {
@@ -516,14 +516,21 @@ class ThreeBackground {
                 // Wave motion
                 positions[i + 1] += Math.sin(this.time + positions[i] * 0.05) * 0.02;
 
-                // Mouse repulsion
+                // Stronger Mouse repulsion
                 const dx = this.mouse.x * 50 - positions[i];
                 const dy = this.mouse.y * 50 - positions[i + 1];
                 const dist = Math.sqrt(dx * dx + dy * dy);
-                if (dist < 30) {
-                    const force = (30 - dist) / 30 * 0.1;
-                    positions[i] -= dx * force * 0.02;
-                    positions[i + 1] -= dy * force * 0.02;
+
+                // Increased repulsion radius and force
+                if (dist < 50) {
+                    const force = (50 - dist) / 50;
+                    // Push away from cursor
+                    const repulsionX = dx * force * 5.0; // Much stronger force
+                    const repulsionY = dy * force * 5.0;
+
+                    // Directly modify position for immediate reaction
+                    positions[i] -= repulsionX * 0.05;
+                    positions[i + 1] -= repulsionY * 0.05;
                 }
 
                 // Boundary wrapping
