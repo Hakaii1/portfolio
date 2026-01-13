@@ -453,4 +453,73 @@ document.addEventListener('DOMContentLoaded', () => {
     new SkillsAnimation();
     // ContactForm is removed (no form in current design)
     // ScrollAnimations removed - GSAP handles scroll animations
+    new RestrictedLinkManager();
 });
+
+// Restricted Link Manager
+class RestrictedLinkManager {
+    constructor() {
+        this.restrictedLinks = document.querySelectorAll('.restricted-link');
+        this.init();
+    }
+
+    init() {
+        this.restrictedLinks = document.querySelectorAll('.restricted-link');
+        this.restrictedLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const message = link.dataset.message || "Access Denied: This project is confidential.";
+                this.showRestrictionMessage(message);
+            });
+        });
+    }
+
+    showRestrictionMessage(message) {
+        // Remove existing toast if any
+        const existingToast = document.querySelector('.toast-message');
+        if (existingToast) existingToast.remove();
+
+        const toast = document.createElement('div');
+        toast.className = 'toast-message';
+        toast.innerHTML = `
+            <div class="toast-content">
+                <i class="fas fa-lock"></i>
+                <span>${message}</span>
+            </div>
+        `;
+
+        // Add styles dynamically (or could be in CSS)
+        Object.assign(toast.style, {
+            position: 'fixed',
+            bottom: '20px',
+            left: '50%',
+            transform: 'translateX(-50%) translateY(100px)',
+            background: 'rgba(255, 71, 87, 0.95)',
+            color: 'white',
+            padding: '12px 24px',
+            borderRadius: '50px',
+            boxShadow: '0 4px 15px rgba(0,0,0,0.3)',
+            zIndex: '10000',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '10px',
+            fontWeight: '500',
+            transition: 'transform 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55)',
+            backdropFilter: 'blur(10px)',
+            border: '1px solid rgba(255,255,255,0.2)'
+        });
+
+        document.body.appendChild(toast);
+
+        // Animate in
+        requestAnimationFrame(() => {
+            toast.style.transform = 'translateX(-50%) translateY(0)';
+        });
+
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.style.transform = 'translateX(-50%) translateY(100px)';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+}
