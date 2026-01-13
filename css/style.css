@@ -1600,14 +1600,19 @@ footer .scroll-to-top {
 }
 
 .footer-content {
+    position: relative;
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
     margin-bottom: 1rem;
     gap: 2rem;
 }
 
 .footer-logo {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
     display: flex;
     align-items: center;
     gap: 0.8rem;
@@ -1616,12 +1621,10 @@ footer .scroll-to-top {
 }
 
 .footer-text {
-    
     color: var(--text-secondary);
     font-size: 1rem;
     margin: 0;
-    
-    
+    text-align: center;
 }
 
 .footer-logo span:first-child {
@@ -1641,7 +1644,8 @@ footer .scroll-to-top {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    color: var(--primary-color); /* Fallback for browsers that don't support gradient text */
+    color: var(--primary-color);
+    /* Fallback for browsers that don't support gradient text */
 }
 
 .footer-bottom {
@@ -1713,6 +1717,11 @@ footer .scroll-to-top:hover {
         flex-direction: column;
         gap: 1rem;
         align-items: center;
+    }
+
+    .footer-logo {
+        position: static;
+        transform: none;
     }
 
     .footer-text {
