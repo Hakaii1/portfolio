@@ -1087,14 +1087,99 @@ section {
     transition: width 1s ease;
 }
 
-/* Projects Section */
+/* Projects Section - Horizontal Scroll */
+.projects-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    padding: 2rem 0;
+}
+
+.projects-scroll-container {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 1rem 0;
+    margin: 0 3rem;
+    scroll-snap-type: x mandatory;
+}
+
+.projects-scroll-container::-webkit-scrollbar {
+    display: none;
+}
+
 .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 3rem;
+    display: flex;
+    gap: 2rem;
+    padding: 1rem 0.5rem;
+    width: max-content;
+}
+
+/* Scroll Arrows */
+.scroll-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: var(--transition);
+    color: var(--text-primary);
+}
+
+.scroll-arrow:hover {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+    color: white;
+    box-shadow: var(--shadow-glow);
+}
+
+.scroll-arrow-left {
+    left: 0;
+}
+
+.scroll-arrow-right {
+    right: 0;
+}
+
+.scroll-arrow:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+    width: 100%;
+    max-width: 300px;
+    height: 4px;
+    background: var(--bg-tertiary);
+    border-radius: 2px;
+    margin: 2rem auto 0;
+    overflow: hidden;
+}
+
+.scroll-progress-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--primary-color), var(--primary-hover));
+    border-radius: 2px;
+    transition: width 0.1s ease;
 }
 
 .project-card {
+    flex: 0 0 380px;
+    min-width: 380px;
+    max-width: 380px;
     background: var(--glass-bg);
     border: 1px solid var(--border-color);
     border-radius: 20px;
@@ -1102,6 +1187,7 @@ section {
     transition: var(--transition);
     backdrop-filter: blur(20px);
     position: relative;
+    scroll-snap-align: start;
 }
 
 .project-card:hover {
@@ -2282,7 +2368,9 @@ html {
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
-}/* Project Filters */
+}
+
+/* Project Filters */
 .project-filters {
     display: flex;
     justify-content: center;

@@ -394,6 +394,114 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Horizontal Scroll Manager for Projects Section
+class HorizontalScrollManager {
+    constructor() {
+        this.scrollContainer = document.querySelector('.projects-scroll-container');
+        this.scrollWrapper = document.querySelector('.projects-scroll-wrapper');
+        this.projectsGrid = document.querySelector('.projects-grid');
+        this.leftArrow = document.querySelector('.scroll-arrow-left');
+        this.rightArrow = document.querySelector('.scroll-arrow-right');
+        this.progressFill = document.querySelector('.scroll-progress-fill');
+
+        if (this.scrollContainer) {
+            this.init();
+        }
+    }
+
+    init() {
+        this.setupArrowNavigation();
+        this.setupScrollProgress();
+        this.setupDragScroll();
+        this.updateArrowState();
+    }
+
+    setupArrowNavigation() {
+        const scrollAmount = 400; // pixels to scroll per click
+
+        this.leftArrow?.addEventListener('click', () => {
+            this.scrollContainer.scrollBy({
+                left: -scrollAmount,
+                behavior: 'smooth'
+            });
+        });
+
+        this.rightArrow?.addEventListener('click', () => {
+            this.scrollContainer.scrollBy({
+                left: scrollAmount,
+                behavior: 'smooth'
+            });
+        });
+
+        // Update arrow visibility on scroll
+        this.scrollContainer.addEventListener('scroll', () => {
+            this.updateArrowState();
+            this.updateProgressBar();
+        });
+    }
+
+    updateArrowState() {
+        const { scrollLeft, scrollWidth, clientWidth } = this.scrollContainer;
+
+        // Left arrow: hide when at the start
+        if (this.leftArrow) {
+            this.leftArrow.style.opacity = scrollLeft <= 10 ? '0.3' : '1';
+            this.leftArrow.style.pointerEvents = scrollLeft <= 10 ? 'none' : 'auto';
+        }
+
+        // Right arrow: hide when at the end
+        if (this.rightArrow) {
+            const atEnd = scrollLeft + clientWidth >= scrollWidth - 10;
+            this.rightArrow.style.opacity = atEnd ? '0.3' : '1';
+            this.rightArrow.style.pointerEvents = atEnd ? 'none' : 'auto';
+        }
+    }
+
+    setupScrollProgress() {
+        this.updateProgressBar();
+    }
+
+    updateProgressBar() {
+        if (!this.progressFill) return;
+
+        const { scrollLeft, scrollWidth, clientWidth } = this.scrollContainer;
+        const maxScroll = scrollWidth - clientWidth;
+        const progress = maxScroll > 0 ? (scrollLeft / maxScroll) * 100 : 0;
+        this.progressFill.style.width = `${progress}%`;
+    }
+
+    setupDragScroll() {
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        this.scrollContainer.addEventListener('mousedown', (e) => {
+            isDown = true;
+            this.scrollContainer.classList.add('dragging');
+            startX = e.pageX - this.scrollContainer.offsetLeft;
+            scrollLeft = this.scrollContainer.scrollLeft;
+        });
+
+        this.scrollContainer.addEventListener('mouseleave', () => {
+            isDown = false;
+            this.scrollContainer.classList.remove('dragging');
+        });
+
+        this.scrollContainer.addEventListener('mouseup', () => {
+            isDown = false;
+            this.scrollContainer.classList.remove('dragging');
+        });
+
+        this.scrollContainer.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - this.scrollContainer.offsetLeft;
+            const walk = (x - startX) * 1.5;
+            this.scrollContainer.scrollLeft = scrollLeft - walk;
+        });
+    }
+}
+
 // Initialize all components
 document.addEventListener('DOMContentLoaded', () => {
     new ThemeManager();
@@ -402,6 +510,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new Navigation();
     new Navigation();
     new RestrictedLinkManager();
+    new HorizontalScrollManager();
     updateProjectCount();
     initProjectFilters();
 });
