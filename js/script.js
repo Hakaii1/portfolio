@@ -1,4 +1,23 @@
 // Loading Screen
+// Project Counter - Direct Function
+function updateProjectCount() {
+    const countElement = document.getElementById('projectCount');
+    if (countElement) {
+        // Force update immediately
+        const projectCards = document.querySelectorAll('.project-card');
+        const count = projectCards.length;
+        countElement.textContent = count;
+        // console.log(`Force Project Count Update: ${count}`);
+    }
+}
+
+// Run immediately if DOM is ready, otherwise wait
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', updateProjectCount);
+} else {
+    updateProjectCount();
+}
+
 window.addEventListener('load', () => {
     const loadingScreen = document.getElementById('loadingScreen');
     setTimeout(() => {
@@ -324,78 +343,9 @@ class Navigation {
     }
 }
 
-// Skills Animation
-class SkillsAnimation {
-    constructor() {
-        this.skillItems = document.querySelectorAll('.skill-item');
-        this.init();
-    }
 
-    init() {
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    this.animateSkill(entry.target);
-                }
-            });
-        }, { threshold: 0.5 });
 
-        this.skillItems.forEach(item => observer.observe(item));
-    }
 
-    animateSkill(skillItem) {
-        const progressBar = skillItem.querySelector('.skill-progress');
-        if (progressBar) {
-            const width = progressBar.style.width;
-            progressBar.style.width = '0%';
-            setTimeout(() => {
-                progressBar.style.width = width;
-            }, 200);
-        }
-    }
-}
-
-// Contact Form
-class ContactForm {
-    constructor() {
-        this.form = document.getElementById('contactForm');
-        this.init();
-    }
-
-    init() {
-        this.form.addEventListener('submit', (e) => this.handleSubmit(e));
-    }
-
-    async handleSubmit(e) {
-        e.preventDefault();
-
-        const formData = new FormData(e.target);
-        const data = Object.fromEntries(formData);
-
-        // Simulate form submission
-        const submitBtn = e.target.querySelector('.btn');
-        const originalText = submitBtn.innerHTML;
-
-        submitBtn.innerHTML = '<span>Sending...</span><i class="fas fa-spinner fa-spin"></i>';
-        submitBtn.disabled = true;
-
-        // Simulate API call
-        setTimeout(() => {
-            submitBtn.innerHTML = '<span>Sent Successfully!</span><i class="fas fa-check"></i>';
-            submitBtn.style.background = 'linear-gradient(135deg, #00ff88, #00ff44)';
-
-            setTimeout(() => {
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
-                submitBtn.style.background = '';
-                e.target.reset();
-            }, 3000);
-        }, 2000);
-    }
-}
-
-// ScrollAnimations class removed - GSAP handles all scroll animations now
-// See gsap-animations.js for the enhanced scroll-triggered animations
 
 // Resume Modal Management
 function openResumeModal() {
@@ -450,11 +400,40 @@ document.addEventListener('DOMContentLoaded', () => {
     new CanvasAnimation();
     new TypingAnimation();
     new Navigation();
-    new SkillsAnimation();
-    // ContactForm is removed (no form in current design)
-    // ScrollAnimations removed - GSAP handles scroll animations
+    new Navigation();
     new RestrictedLinkManager();
+    updateProjectCount();
+    initProjectFilters();
 });
+
+// Project Filter Logic
+function initProjectFilters() {
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const projectCards = document.querySelectorAll('.project-card');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remove active class from all
+            filterBtns.forEach(b => b.classList.remove('active'));
+            // Add active class to clicked
+            btn.classList.add('active');
+
+            const filterValue = btn.getAttribute('data-filter');
+
+            projectCards.forEach(card => {
+                if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                    card.classList.remove('hidden');
+                    // Retrigger animation
+                    card.style.animation = 'none';
+                    card.offsetHeight; /* trigger reflow */
+                    card.style.animation = null;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    });
+}
 
 // Restricted Link Manager
 class RestrictedLinkManager {
